@@ -42,7 +42,7 @@ public class Map {
 //                        System.out.println("Creating ghosts at: (" + col + ", " + row + ")");
                         Ghost pinkGhost = new Ghost(col * Constants.SQUARE_WIDTH, row * Constants.SQUARE_WIDTH, this.mapPane, Color.PINK);
 //                        System.out.println("Creating ghosts at: (" + col + ", " + row + ")");
-                        Ghost blueGhost = new Ghost((col -2) * Constants.SQUARE_WIDTH, row * Constants.SQUARE_WIDTH, this.mapPane, Color.CYAN);
+                        Ghost blueGhost = new Ghost((col + 1) * Constants.SQUARE_WIDTH, row * Constants.SQUARE_WIDTH, this.mapPane, Color.CYAN);
 //                        System.out.println("Creating ghosts at: (" + col + ", " + row + ")");
                         Ghost orangeGhost = new Ghost((col - 1) * Constants.SQUARE_WIDTH, row * Constants.SQUARE_WIDTH, this.mapPane, Color.ORANGE);
 //                        System.out.println("Creating ghosts at: (" + col + ", " + row + ")");
