@@ -118,51 +118,6 @@ public class Game {
             }
         }
     }
-    /* private void checkCollisions(Pacman pacman, Pane gamePane) {
-        int pacmanRow = pacman.getPacmanRow();
-        int pacmanColumn = pacman.getPacmanCol();
-
-        SmartSquare currentSquare = this.mapArray[pacmanRow][pacmanColumn];
-        ArrayList<Collideable> collideables = currentSquare.getCollideables();
-
-        for (int i = 0; i < collideables.size(); i++) {
-            Collideable collideable = collideables.get(i);
-            int collideableRow = collideable.getRow();
-            int collideableColumn = collideable.getCol();
-
-            if (pacmanRow == collideableRow && pacmanColumn == collideableColumn) {
-                //System.out.println("Pacman and collideable at (" + pacmanRow + ", " + pacmanColumn + ") collided.");
-                System.out.println("gamePane contains collideable before removal: " + gamePane.getChildren().contains(collideable));
-                gamePane.getChildren().remove(collideable);
-                System.out.println("gamePane contains collideable after removal: " + gamePane.getChildren().contains(collideable));
-
-                i--;
-            }
-        }
-    } */
-    /* WORKS? private void checkCollisions(Pacman pacman, Pane gamePane) {
-        int pacmanRow = pacman.getPacmanRow();
-        int pacmanColumn = pacman.getPacmanCol();
-
-        SmartSquare currentSquare = this.mapArray[pacmanRow][pacmanColumn];
-        ArrayList<Collideable> collideables = currentSquare.getCollideables();
-
-        // goes through collideables and check for collisions
-        collideables.removeIf(collideable -> {
-            int collideableRow = collideable.getRow();
-            int collideableColumn = collideable.getCol();
-
-            if (pacmanRow == collideableRow && pacmanColumn == collideableColumn) {
-                //System.out.println("Pacman and collideable at (" + pacmanRow + ", " + pacmanColumn + ") collided.");
-                System.out.println("Checking if gamePane contains collideable before removal: " + gamePane.getChildren().contains(collideable));
-                gamePane.getChildren().remove(collideable);
-                System.out.println("Checking if gamePane contains collideable after removal: " + gamePane.getChildren().contains(collideable));
-                return true; // removes
-            }
-
-            return false; // keeps in list
-        });
-    } */
     private void checkCollisions(Pacman pacman, Pane gamePane) {
         int pacmanRow = pacman.getPacmanRow();
         int pacmanColumn = pacman.getPacmanCol();
