@@ -5,18 +5,19 @@ import javafx.scene.layout.Pane;
 
 public class PaneOrganizer {
     private BorderPane root;
-    //private Pane gamePane;
+    private Sidebar sidebar;
+
     public PaneOrganizer() {
         this.root = new BorderPane();
         Pane gamePane = new Pane();
         this.root.setCenter(gamePane);
-//        Map map = new Map(gamePane);
-         new Game(gamePane);
+
+        this.sidebar = new Sidebar();
+        this.root.setBottom(this.sidebar);
+
+        new Game(gamePane, this.sidebar);
     }
-    /**
-     * Returns root.
-     * @return
-     */
+
     public BorderPane getRoot() {
         return this.root;
     }

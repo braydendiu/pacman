@@ -26,7 +26,6 @@ public class SmartSquare {
 
     public void addToCollidable(Collideable collideable) {
         this.collideables.add(collideable);
-        System.out.println("Adding to arraylist. Current size: " + this.collideables.size());
     }
 
     /* public void removeFromCollidable(Collideable collideable) {

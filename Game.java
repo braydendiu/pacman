@@ -7,10 +7,10 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
-
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -20,18 +20,16 @@ public class Game {
     private Timeline timeline;
     private Pacman pacman;
     private boolean gameStarted = false;
+    private Sidebar sidebar;
 
-    public Game(Pane gamePane) {
+    public Game(Pane gamePane, Sidebar sidebar) {
         this.gamePane = gamePane;
-        //Map map = new Map(gamePane);
         CS15SupportMap.getSupportMap();
         this.mapArray = new SmartSquare[23][23];
-        //this.pacman = new Pacman(15, 15, this.gamePane, this.mapArray);
-        //this.mapPane = mapPane;
-        //Game game = new Game(gamePane);
         this.setUpMap();
-        gamePane.setFocusTraversable(true);
-        gamePane.setOnKeyPressed((event) -> this.handleKeyPress(event.getCode()));
+        this.sidebar = sidebar;
+        this.gamePane.setFocusTraversable(true);
+        this.gamePane.setOnKeyPressed((KeyEvent event) -> this.handleKeyPress(event.getCode()));
         this.setUpTimeline();
     }
 
@@ -53,33 +51,23 @@ public class Game {
                         this.mapArray[row][col] = new SmartSquare(row * Constants.SQUARE_WIDTH, col * Constants.SQUARE_WIDTH, this.gamePane, Color.BLUE);
                         break;
                     case DOT:
-                        /*this.mapArray[row][col] = new SmartSquare(row * Constants.SQUARE_WIDTH, col * Constants.SQUARE_WIDTH, this.gamePane, Color.BLACK);
                         Collideable dot = new Dot(col * Constants.SQUARE_WIDTH + 15, row * Constants.SQUARE_WIDTH + 15, this.gamePane);
                         this.mapArray[row][col].addToCollidable(dot);
-                        break;*/
-                        Collideable dot = new Dot(col * Constants.SQUARE_WIDTH + 15, row * Constants.SQUARE_WIDTH + 15, this.gamePane);
-                        this.mapArray[row][col].addToCollidable(dot);
-                        System.out.println("Dot added to SmartSquare at (" + row + ", " + col + ")");
                         break;
                     case ENERGIZER:
-                        //this.mapArray[row][col] = new SmartSquare(row * Constants.SQUARE_WIDTH, col * Constants.SQUARE_WIDTH, this.gamePane, Color.BLACK);
                         Collideable energizer = new Energizer(col * Constants.SQUARE_WIDTH + 15, row * Constants.SQUARE_WIDTH + 15, this.gamePane);
                         this.mapArray[row][col].addToCollidable(energizer);
                         break;
                     case GHOST_START_LOCATION:
-                        //this.mapArray[row][col] = new SmartSquare(row * Constants.SQUARE_WIDTH, col * Constants.SQUARE_WIDTH, this.gamePane, Color.BLACK);
                         Ghost redGhost = new Ghost(col * Constants.SQUARE_WIDTH, (row - 2) * Constants.SQUARE_WIDTH, this.gamePane, Color.RED);
                         this.mapArray[row][col].addToCollidable(redGhost);
 
-                        //this.mapArray[row][col] = new SmartSquare(row * Constants.SQUARE_WIDTH, col * Constants.SQUARE_WIDTH, this.gamePane, Color.BLACK);
                         Ghost pinkGhost = new Ghost(col * Constants.SQUARE_WIDTH, row * Constants.SQUARE_WIDTH, this.gamePane, Color.PINK);
                         this.mapArray[row][col].addToCollidable(pinkGhost);
 
-                        //this.mapArray[row][col] = new SmartSquare(row * Constants.SQUARE_WIDTH, col * Constants.SQUARE_WIDTH, this.gamePane, Color.BLACK);
                         Ghost blueGhost = new Ghost((col + 1) * Constants.SQUARE_WIDTH, row * Constants.SQUARE_WIDTH, this.gamePane, Color.CYAN);
                         this.mapArray[row][col].addToCollidable(blueGhost);
 
-                        //this.mapArray[row][col] = new SmartSquare(row * Constants.SQUARE_WIDTH, col * Constants.SQUARE_WIDTH, this.gamePane, Color.BLACK);
                         Ghost orangeGhost = new Ghost((col - 1) * Constants.SQUARE_WIDTH, row * Constants.SQUARE_WIDTH, this.gamePane, Color.ORANGE);
                         this.mapArray[row][col].addToCollidable(orangeGhost);
                         break;
@@ -94,52 +82,49 @@ public class Game {
     }
 
     private void setUpTimeline() {
-        KeyFrame keyFrame = new KeyFrame(Duration.seconds(0.4), this::update);
+        KeyFrame keyFrame = new KeyFrame(Duration.seconds(0.3), this::update);
         this.timeline = new Timeline(keyFrame);
         this.timeline.setCycleCount(Animation.INDEFINITE);
-        //timeline.play();
     }
 
     private void update(ActionEvent event) {
         if (this.gameStarted) {
             this.pacman.movePacman();
-            this.checkCollisions(pacman, gamePane);
+            this.checkCollisions(this.pacman, this.sidebar, this.gamePane);
         }
     }
 
-
     public void handleKeyPress(KeyCode code) {
+        System.out.println("calling keypress");
+
         Direction newDirection = Direction.fromKeyCode(code);
         if (newDirection != null) {
-            this.pacman.setDirection(newDirection);
+            System.out.println("Changing direction to: " + newDirection);
+            this.pacman.changeDirection(newDirection);
             if (!this.gameStarted) {
                 this.timeline.play();
                 this.gameStarted = true;
             }
         }
+        //System.out.println("calling keypress");
     }
-    private void checkCollisions(Pacman pacman, Pane gamePane) {
+    private void checkCollisions(Pacman pacman, Sidebar sidebar, Pane gamePane) {
         int pacmanRow = pacman.getPacmanRow();
         int pacmanColumn = pacman.getPacmanCol();
 
         SmartSquare currentSquare = this.mapArray[pacmanRow][pacmanColumn];
         ArrayList<Collideable> collideables = currentSquare.getCollideables();
-        ArrayList<Collideable> toRemove = new ArrayList<>();
 
         for (Collideable collideable : collideables) {
             int collideableRow = collideable.getRow();
             int collideableColumn = collideable.getCol();
 
             if (pacmanRow == collideableRow && pacmanColumn == collideableColumn) {
-                System.out.println("gamePane contains collideable before removal: " + this.gamePane.getChildren().contains(collideable));
-                toRemove.add(collideable);
-                this.gamePane.getChildren().removeAll(toRemove);
-                //this.gamePane.getChildren().remove(collideable);
-                System.out.println("gamePane contains collideable after removal: " + this.gamePane.getChildren().contains(collideable));
+                collideable.removeFromPane(gamePane);
+                collideable.addToScore(sidebar);
+                collideables.remove(collideable);  // Remove from the current square's collideables
+                break;
             }
         }
-//        collideables.removeAll(toRemove);
-        collideables.clear();
-//        gamePane.getChildren().removeAll(toRemove);
     }
 }

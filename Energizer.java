@@ -25,4 +25,8 @@ public class Energizer implements Collideable {
     public void removeFromPane(Pane gamePane) {
         gamePane.getChildren().remove(energizer);
     }
+    @Override
+    public void addToScore(Sidebar sidebar) {
+        sidebar.addToScore(100);
+    }
 }

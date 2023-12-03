@@ -6,5 +6,5 @@ public interface Collideable {
     int getRow();
     int getCol();
     void removeFromPane(Pane gamePane);
-
+    void addToScore(Sidebar sidebar);
 }

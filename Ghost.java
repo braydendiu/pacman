@@ -16,15 +16,19 @@ public class Ghost implements Collideable {
     }
     @Override
     public int getRow() {
-        return row;
+        return this.row;
     }
 
     @Override
     public int getCol() {
-        return column;
+        return this.column;
     }
     @Override
     public void removeFromPane(Pane gamePane) {
-        gamePane.getChildren().remove(ghost);
+        gamePane.getChildren().remove(this.ghost);
+    }
+    @Override
+    public void addToScore(Sidebar sidebar) {
+        sidebar.addToScore(200);
     }
 }

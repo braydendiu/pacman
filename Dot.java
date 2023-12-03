@@ -26,6 +26,11 @@ public class Dot implements Collideable {
     }
     @Override
     public void removeFromPane(Pane gamePane) {
-        gamePane.getChildren().remove(dot);
+        gamePane.getChildren().remove(this.dot);
     }
+    @Override
+    public void addToScore(Sidebar sidebar) {
+        sidebar.addToScore(10);
+    }
+
 }
