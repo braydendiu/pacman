@@ -24,7 +24,6 @@ public class Ghost implements Collideable {
     private int previousColumn;
     private Pacman pacman;
     private Sidebar sidebar;
-    private Runnable resetRoundCallback;
     private static boolean updateScatterTargets = true;
     private boolean scatterTargetsUpdated;
     private boolean shouldUpdateScatterTargets;
@@ -42,7 +41,6 @@ public class Ghost implements Collideable {
         this.column = (int) (x / Constants.SQUARE_WIDTH);
         this.currentDirection = Direction.LEFT;
         this.game = game;
-
         this.color = color;
         this.currentMode = GhostMode.CHASE;
         this.scatterModeDuration = 30;

@@ -13,7 +13,7 @@ public class PaneOrganizer {
         Pane gamePane = new Pane();
         this.game = new Game(gamePane, this.sidebar);
         this.root.setCenter(gamePane);
-        this.sidebar = new Sidebar(game);
+        this.sidebar = new Sidebar(this.game);
         this.root.setBottom(this.sidebar);
 
         new Game(gamePane, this.sidebar);
