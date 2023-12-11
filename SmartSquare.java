@@ -24,16 +24,26 @@ public class SmartSquare {
         return this.collideables;
     }
 
+    /**
+     * Adds collideable objects to the ArrayList.
+     * @param collideable
+     */
     public void addToCollidable(Collideable collideable) {
         this.collideables.add(collideable);
     }
 
-    /* public void removeFromCollidable(Collideable collideable) {
+    /**
+     * Removes collideables from ArrayList upon collision.
+     * @param collideable
+     */
+    public void removeFromCollideables(Collideable collideable) {
         this.collideables.remove(collideable);
-    } */
-    /* public void addToArrayList(Collideable collideable) {
-        this.addToCollidable(collideable);
-    } */
+    }
+
+    /**
+     * Returns the color.
+     * @return
+     */
     public Color getColor() {
         return color;
     }
