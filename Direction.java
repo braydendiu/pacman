@@ -57,6 +57,12 @@ public enum Direction {
                 return currentY;
         }
     }
+
+    /**
+     * Used for the key press so that Pacman can move.
+     * @param keyCode
+     * @return
+     */
     public static Direction fromKeyCode(KeyCode keyCode) {
         switch (keyCode) {
             case UP:

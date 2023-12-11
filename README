@@ -1,10 +1,34 @@
 README Pacman
-Overview:
+Overview: This is my Final Project, Pacman. It is meant to be a Pacman game. The Game class handles a lot
+of the logic when it comes to setting the game up because it creates the map and all of the objects within
+the game. It is also responsible for the general game logic like stopping the game or setting up the timeline.
+In my Ghost class, it handles most of the Ghost logic. The ghosts move according to different targets that
+are received using a BFS algorithm. Ghosts can either target Pacman in chase mode, target a corner of the
+board in scatter mode, or a random location in frightened mode. Scatter mode lasts for approximately 20
+seconds while the other two modes last for approximately 7 seconds. There is a Collideable interface that
+the Dot, Energizer, and Ghost class implements because they are all collideable objects. So, they all
+need to add to the score or get removed from the game. I also had a Sidebar class so that my PaneOrganizer
+would not hold too much logic, so the Sidebar is responsible for the labels on the bottom with score and
+lives. I have a Direction enum class that handles the key input for direction that is used to move Pacman.
+It is also used to find valid moves, because part of the BFS is that they cannot move in opposite directions.
+To the TA reading this, thanks for your efforts in making my first CS class a great experience :)
 
-Design Choices:
+Design Choices: I decided to create a Collideable interface because they are all collideable objects, so they
+would share the same methods such as addToScore or removeFromGame. I wanted to have a Sidebar class that
+handle the label updating logic separately from my PaneOrganizer because I wanted to keep my PaneOrganizer
+as simple as possible. For my BFS, it made the most sense to me for my valid neighbors to return a boolean
+value because I did it based on color checking and if it was visited, so it would return true for valid
+moves and that is how I let the ghosts know about the neighbors. Overall, I used many helper methods
+throughout my classes but mainly in my Ghost and Game classes simply because the game has so many
+requirements and the ghosts have so much functionality. Lastly, I decided to use a Direction enum class
+for the arrow key inputs as those would be used in the Game class. It seemed more cohesive to have that
+class be responsible for just the switch cases with their directions, and I could directly use that
+to make my handleKeyPress methods more concise.
 
-Hours Spent:
-
-Known Bugs:
+Known Bugs: When the round resets after Pacman collides with a ghost in chase or scatter mode, the BFS
+is returning a direction so the positions of the ghosts will appear one square off, even though the
+locations are hard coded to be in a certain square.
 
 Debugging Collaborators: N/A
+
+Hours Spent: 55
